@@ -20,7 +20,7 @@
 			</div>
 		</div>
 
-		<table class="table table-bordered">
+		<table class="table table-bordered" id="userData">
 			<thead>
 				<tr>
 					<th>Title</th>
@@ -29,22 +29,24 @@
 				</tr>
 			</thead>
 			<tbody>
-				
+       <?php 
+        require 'api/db_connect.php';
+        $sql = "SELECT * FROM items ORDER BY id DESC";
+        $result = $mysql->query($sql);
+      ?>
+      <?php if($result->num_rows>0):?>
+        <?php while($row = $result->fetch_assoc()) {?>
+				<tr id="tr_<?= $row['id'] ?>">
+          <td id="aa"><?= $row['title'] ?></td>
+          <td><?= $row['description'] ?></td>
+          <td data-id="<?= $row['id'] ?>"><button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button>
+          <button class="btn btn-danger remove-item">Delete</button>
+          </td>    
+        </tr>
+          <?php }?>
+      <?php endif ?>
 			</tbody>
 		</table>
-
-		<ul class="pagination" class="pagination-sm"></ul>
-
-
-
-
-
-
-
-
-
-
-
 
 	</div>
 
@@ -113,16 +115,12 @@
   </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.0.slim.min.js"
-  integrity="sha256-qLAv0kBAihcHZLI3fv3WITKeRsUX27hd6upBBa0MSow="
-  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.0.min.js" integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I=" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/7.0.0/validator.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-   <script>
-   	
-   </script>
+  <script src="js/app.js"></script>
 </body>
 </html>
 
